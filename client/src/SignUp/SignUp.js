@@ -3,14 +3,15 @@ import axios from 'axios';
 
 export default class Login extends React.Component {
     state = {
-        username: 'chance',
-        password: 'pass',
+        username: '',
+        password: '',
+        department: ''
     };
 
     render() {
         return (
             <>
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
             <form onSubmit = {this.handleSubmit}>
                 <div>
                     <label htmlFor="Username">Username</label>
@@ -19,6 +20,7 @@ export default class Login extends React.Component {
                         name = 'username'
                         value = {this.state.username}
                         onChange = {this.handleChanges}
+                        placeholder= 'username'
                     />
                 </div>
                 <div>
@@ -28,10 +30,21 @@ export default class Login extends React.Component {
                         name = 'password'
                         value = {this.state.password}
                         onChange = {this.handleChanges}
+                        placeholder = 'password'
                     />
                 </div>
                 <div>
-                    <button type = 'submit'>Login</button>
+                    <label htmlFor = "Department">Department</label>
+                    <input 
+                        type = 'text'
+                        name = 'department'
+                        value = {this.state.department}
+                        onChange = {this.handleChanges}
+                        placeholder = 'department'
+                    />
+                </div>
+                <div>
+                    <button type = 'submit'>Sign Up</button>
                 </div>
             </form>
             </>
@@ -44,12 +57,12 @@ export default class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const endpoint = 'http://localhost:5000/api/auth/login';
+        const endpoint = 'http://localhost:5000/api/auth/register';
         axios
         .post(endpoint, this.state)
         .then(res => {
-            localStorage.setItem('jwt',res.data.token);
-            this.props.history.push('/users')
+            console.log(res)
+            this.props.history.push('/login')
         })
         .catch(err => {
             console.log(err)
